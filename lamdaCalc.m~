@@ -1,0 +1,15 @@
+lam=(800:10:1000)/30; 
+p_b=zeros(1,length(lam)); 
+i=0; 
+for L=lam
+    i=i+1; 
+    p_b(i)=((L/mu).^K/factorial(K))/(sum((L/mu).^(0:K)./factorial(0:K)));
+    
+end
+bar(lam*30,p_b,'b') 
+hold 
+plot(lam*30,0.02*ones(size(lam)),'k','Linewidth',6) 
+xlabel('average number of calls per 30 minutes') 
+ylabel('P_b','Fontsize',12) 
+title('Probability of call blocked vs calls in half hour')
+axis([800 1000 0 0.12]) 

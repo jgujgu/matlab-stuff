@@ -1,0 +1,19 @@
+
+
+
+for i=1:4
+    
+
+    K=32;
+    X_initial=0;
+    lam=25;
+    mu=60/56; 
+    subplot(2,2,i)
+    callingDist(X_initial,lam,mu,K,10^i) 
+    axis([0 K 0 0.1]); 
+    xlabel('X') 
+    ylabel('P') 
+    title(['T_{max}=10^',num2str(i)])
+
+end
+prob

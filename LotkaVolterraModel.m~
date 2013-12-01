@@ -1,0 +1,51 @@
+function sim_log=LotkaVolterraModel(left, right, c, y_initial, maximum_t) 
+n=1; 
+Y(:,n)=y_initial; 
+T(n)=0;
+
+while T(n)<=maximum_t 
+    
+    y=Y(:,n); 
+    hazards=zeros(3,1);
+    hazards(1)=c(1)*y(1); 
+    hazards(2)=c(2)*y(1)*y(2); 
+    hazards(3)=c(3)*y(2); 
+    hazard_sum=sum(hazards); 
+    T(n+1)=T(n)+exprnd(1/hazard_sum); 
+    Probs=hazards/hazard_sum; 
+    event=draw_event(Probs); 
+    Y(:,n+1)=y-left(event,:)'+right(event,:)'; 
+    n=n+1;
+
+
+end
+
+sim_log=[T;Y];
+
+end
+
+
+left = [1,0;1,1;0,1];
+right = [2,0;0,2;0,0];
+
+c = [1, 0.005, 0.6]'; 
+y_initial0 = [50, 100]';
+maximum_t = 30;
+
+sim_log = LotkaVolterraModel(left, right, c, y_initial0, maximum_t);
+
+figure 
+plot(sim_log(1,:), sim_log(2:end,:), '-', 'Linewidth',2); 
+legend('X (Prey)','Y (Predator)'); 
+xlabel('Time'); 
+xlim([0 30]); 
+ylim([0 1000]); 
+title(sprintf('X(0) = %d, Y(0) = %d', y_initial0),'Fontsize',12); 
+ylabel('Population Size','Fontsize',12);
+
+
+figure
+plot(sim_log(2,:), sim_log(3,:),'-','LineWidth',2,'Color','r'); 
+title('Phase space plot of Lotka Volterra Prey and Predator Model','Fontsize',12); 
+xlabel('X (Prey)','Fontsize',12); 
+ylabel('Y (Predator)','Fontsize',12);

@@ -1,0 +1,26 @@
+
+
+left = [1,0;1,1;0,1];
+right = [2,0;0,2;0,0];
+
+c = [1, 0.005, 0.6]'; 
+y_initial0 = [50, 100]';
+maximum_t = 30;
+
+simulation_result = LotkaVolterraModel(left, right, c, y_initial0, maximum_t);
+
+figure 
+plot(simulation_result(1,:), simulation_result(2:end,:),'Linewidth',2); 
+legend('prey','predator'); 
+xlabel('time'); 
+xlim([0 30]); 
+ylim([0 1000]); 
+title(sprintf('X(0) = %d, Y(0) = %d', y_initial0),'Fontsize',12); 
+ylabel('Population Size','Fontsize',12);
+
+
+figure
+plot(simulation_result(2,:), simulation_result(3,:),'-','LineWidth',2,'Color','r'); 
+title('Phase space plot of Lotka Volterra Prey and Predator Model','Fontsize',12); 
+xlabel('prey','Fontsize',12); 
+ylabel('predator','Fontsize',12);
